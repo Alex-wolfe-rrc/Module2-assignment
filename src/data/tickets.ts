@@ -4,7 +4,7 @@ import { Ticket } from "../api/v1/ticket";
 const millisecondsPerDay: number = 24 * 60 * 60 * 1000;
 
 /**
- * Initial support tickets used by the API.
+ * Support tickets used by the API.
  *
  * Ticket creation dates are calculated relative to the current time
  * so the sample tickets retain their intended ages.
