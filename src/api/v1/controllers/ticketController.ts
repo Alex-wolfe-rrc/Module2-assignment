@@ -6,7 +6,8 @@ import {
     getTicketById,
     getTicketUrgencyById,
     createTicket,
-    updateTicket
+    updateTicket,
+    deleteTicket
 } from "../services/ticketService";
 
 /**
@@ -205,5 +206,26 @@ export function updateTicketController(
     return response.status(HTTP_STATUS.OK).json({
         message: "Ticket updated",
         data: updatedTicket,
+    });
+}
+
+/**
+ * Handles requests to delete a support ticket.
+ */
+export function deleteTicketController(
+    request: Request,
+    response: Response
+): Response {
+    const ticketId: number = Number(request.params.id);
+    const wasDeleted: boolean = deleteTicket(ticketId);
+
+    if (!wasDeleted) {
+        return response.status(HTTP_STATUS.NOT_FOUND).json({
+            message: "Ticket not found",
+        });
+    }
+
+    return response.status(HTTP_STATUS.OK).json({
+        message: "Ticket deleted",
     });
 }
