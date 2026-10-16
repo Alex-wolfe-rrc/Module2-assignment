@@ -52,11 +52,11 @@ export function getTicketUrgencyById(
         if (urgencyScore < 30) {
             urgencyLevel = "Low urgency. Address when capacity allows.";
         } else if (urgencyScore < 55) {
-            urgencyLevel = "Moderate urgency. Schedule for attention.";
+            urgencyLevel = "Moderate. Schedule for attention.";
         } else if (urgencyScore < 80) {
             urgencyLevel = "High urgency. Prioritize resolution.";
         } else {
-            urgencyLevel = "Critical urgency. Immediate attention required.";
+            urgencyLevel = "Critical. Immediate attention required.";
         }
     }
 
