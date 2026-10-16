@@ -1,9 +1,10 @@
 
 import { getTicketUrgencyById } from "../src/api/v1/services/ticketService";
+import { TicketUrgencyResult } from "../src/api/v1/ticket";
 
 describe("getTicketUrgencyById", () => {
     it("should calculate urgency for a low-priority ticket", () => {
-        const result = getTicketUrgencyById(1);
+        const result: TicketUrgencyResult | undefined = getTicketUrgencyById(1);
 
         expect(result).toBeDefined();
         expect(result?.ticketAge).toBe(3);
@@ -12,7 +13,7 @@ describe("getTicketUrgencyById", () => {
     });
 
     it("should calculate urgency for a critical-priority ticket", () => {
-        const result = getTicketUrgencyById(6);
+        const result: TicketUrgencyResult | undefined = getTicketUrgencyById(6);
 
         expect(result).toBeDefined();
         expect(result?.ticketAge).toBe(6);
@@ -21,14 +22,14 @@ describe("getTicketUrgencyById", () => {
     });
 
     it("should give resolved tickets an urgency score of zero", () => {
-        const result = getTicketUrgencyById(7);
+        const result: TicketUrgencyResult | undefined = getTicketUrgencyById(7);
 
         expect(result).toBeDefined();
         expect(result?.urgencyScore).toBe(0);
     });
 
     it("should return undefined for a ticket that does not exist", () => {
-        const result = getTicketUrgencyById(999);
+        const result: TicketUrgencyResult | undefined = getTicketUrgencyById(999);
 
         expect(result).toBeUndefined();
     });

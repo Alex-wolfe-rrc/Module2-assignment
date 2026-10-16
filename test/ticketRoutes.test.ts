@@ -1,5 +1,6 @@
 
 import request from "supertest";
+import type { Response } from "superagent";
 
 describe("Ticket API routes", () => {
     beforeEach(() => {
@@ -8,7 +9,7 @@ describe("Ticket API routes", () => {
 
     it("should return all tickets", async () => {
         const { default: app } = await import("../src/app");
-        const response = await request(app).get("/api/v1/tickets");
+        const response: Response = await request(app).get("/api/v1/tickets");
 
         expect(response.status).toBe(200);
         expect(response.body.count).toBe(7);
@@ -18,7 +19,7 @@ describe("Ticket API routes", () => {
     it("should return a ticket by ID", async () => {
         const { default: app } = await import("../src/app");
 
-        const response = await request(app).get("/api/v1/tickets/1");
+        const response: Response = await request(app).get("/api/v1/tickets/1");
 
         expect(response.status).toBe(200);
         expect(response.body.data.id).toBe(1);
@@ -28,7 +29,9 @@ describe("Ticket API routes", () => {
     it("should return urgency information for a ticket", async () => {
         const { default: app } = await import("../src/app");
 
-        const response = await request(app).get("/api/v1/tickets/6/urgency");
+        const response: Response = await request(app).get(
+            "/api/v1/tickets/6/urgency"
+        );
 
         expect(response.status).toBe(200);
         expect(response.body.data.urgencyScore).toBe(80);
@@ -39,13 +42,18 @@ describe("Ticket API routes", () => {
 
     it("should create a new ticket", async () => {
         const { default: app } = await import("../src/app");
-        const newTicket = {
+
+        const newTicket: {
+            title: string;
+            description: string;
+            priority: string;
+        } = {
             title: "Test ticket",
             description: "Ticket created by an automated test",
             priority: "medium",
         };
 
-        const response = await request(app)
+        const response: Response = await request(app)
             .post("/api/v1/tickets")
             .send(newTicket);
 
@@ -56,9 +64,10 @@ describe("Ticket API routes", () => {
 
     it("should update an existing ticket", async () => {
         const { default: app } = await import("../src/app");
-        const updates = { status: "resolved" };
 
-        const response = await request(app)
+        const updates: { status: string } = { status: "resolved" };
+
+        const response: Response = await request(app)
             .put("/api/v1/tickets/1")
             .send(updates);
 
@@ -69,7 +78,9 @@ describe("Ticket API routes", () => {
     it("should delete an existing ticket", async () => {
         const { default: app } = await import("../src/app");
 
-        const response = await request(app).delete("/api/v1/tickets/1");
+        const response: Response = await request(app).delete(
+            "/api/v1/tickets/1"
+        );
 
         expect(response.status).toBe(200);
         expect(response.body.message).toBe("Ticket deleted");
