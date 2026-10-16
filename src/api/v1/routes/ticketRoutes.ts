@@ -13,6 +13,6 @@ const ticketRoutes: Router = Router();
  */
 ticketRoutes.get("/tickets", getAllTicketsController);
 ticketRoutes.get("/tickets/:id", getTicketByIdController);
-ticketRoutes.get("/tickets:id/urgency", getTicketUrgencyController);
+ticketRoutes.get("/tickets/:id/urgency", getTicketUrgencyController);
 
 export default ticketRoutes;
