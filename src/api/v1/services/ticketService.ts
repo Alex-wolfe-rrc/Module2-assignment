@@ -73,7 +73,6 @@ export function getTicketUrgencyById(
     };
 }
 
-
 /**
  * Adds a new support ticket to the in-memory ticket list.
  */

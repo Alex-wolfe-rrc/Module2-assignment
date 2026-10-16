@@ -4,7 +4,8 @@ import { HTTP_STATUS } from "../../../constants/httpConstants";
 import {
     getAllTickets,
     getTicketById,
-    getTicketUrgencyById
+    getTicketUrgencyById,
+    createTicket
 } from "../services/ticketService";
 
 /**
@@ -65,5 +66,56 @@ export function getTicketUrgencyController(
     return response.status(HTTP_STATUS.OK).json({
         message: "Ticket urgency calculated",
         data: urgencyData,
+    });
+}
+
+
+/**
+ * Handles requests to create a support ticket.
+ */
+export function createTicketController(
+    request: Request,
+    response: Response
+): Response {
+    const title: unknown = request.body.title;
+    const description: unknown = request.body.description;
+    const priority: unknown = request.body.priority;
+
+    if (
+        typeof title !== "string"
+        || title.trim().length === 0
+    ) {
+        return response.status(HTTP_STATUS.BAD_REQUEST).json({
+            message: "Missing required field: title",
+        });
+    }
+
+    if (
+        typeof description !== "string"
+        || description.trim().length === 0
+    ) {
+        return response.status(HTTP_STATUS.BAD_REQUEST).json({
+            message: "Missing required field: description",
+        });
+    }
+
+    if (
+        typeof priority !== "string"
+        || !["critical", "high", "medium", "low"].includes(priority)
+    ) {
+        return response.status(HTTP_STATUS.BAD_REQUEST).json({
+            message: "Invalid priority. Must be one of: critical, high, medium, low",
+        });
+    }
+
+    const newTicket = createTicket(
+        title,
+        description,
+        priority as "critical" | "high" | "medium" | "low"
+    );
+
+    return response.status(HTTP_STATUS.CREATED).json({
+        message: "Ticket created",
+        data: newTicket,
     });
 }
