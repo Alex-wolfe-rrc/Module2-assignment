@@ -100,3 +100,36 @@ export function createTicket(
 
     return newTicket;
 }
+
+
+/**
+ * Updates an existing support ticket.
+ */
+export function updateTicket(
+    ticketId: number,
+    updates: Partial<Omit<Ticket, "id" | "createdAt">>
+): Ticket | undefined {
+    const ticket: Ticket | undefined = getTicketById(ticketId);
+
+    if (ticket === undefined) {
+        return undefined;
+    }
+
+    if (updates.title !== undefined) {
+        ticket.title = updates.title;
+    }
+
+    if (updates.description !== undefined) {
+        ticket.description = updates.description;
+    }
+
+    if (updates.priority !== undefined) {
+        ticket.priority = updates.priority;
+    }
+
+    if (updates.status !== undefined) {
+        ticket.status = updates.status;
+    }
+
+    return ticket;
+}
