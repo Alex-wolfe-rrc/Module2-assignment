@@ -9,7 +9,7 @@ export default tseslint.config(
             "**coverage/*",
             "**.github/*",
             "eslint.config.mjs",
-            "jest.config.ts",
+            "jest.config.js",
         ],
     },
     eslint.configs.recommended,

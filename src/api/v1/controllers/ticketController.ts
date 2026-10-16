@@ -1,6 +1,7 @@
 
 import { Request, Response } from "express";
 import { HTTP_STATUS } from "../../../constants/httpConstants";
+import { Ticket, TicketUrgencyResult } from "../ticket";
 import {
     getAllTickets,
     getTicketById,
@@ -17,7 +18,7 @@ export function getAllTicketsController(
     request: Request,
     response: Response
 ): Response {
-    const allTickets = getAllTickets();
+    const allTickets: Ticket[] = getAllTickets();
 
     return response.status(HTTP_STATUS.OK).json({
         message: "Tickets retrieved",
@@ -34,7 +35,7 @@ export function getTicketByIdController(
     response: Response
 ): Response {
     const ticketId: number = Number(request.params.id);
-    const ticket = getTicketById(ticketId);
+    const ticket: Ticket | undefined = getTicketById(ticketId);
 
     if (ticket === undefined) {
         return response.status(HTTP_STATUS.NOT_FOUND).json({
@@ -57,7 +58,8 @@ export function getTicketUrgencyController(
     response: Response
 ): Response {
     const ticketId: number = Number(request.params.id);
-    const urgencyData = getTicketUrgencyById(ticketId);
+    const urgencyData: TicketUrgencyResult | undefined =
+    getTicketUrgencyById(ticketId);
 
     if (urgencyData === undefined) {
         return response.status(HTTP_STATUS.NOT_FOUND).json({
@@ -109,11 +111,11 @@ export function createTicketController(
         });
     }
 
-    const newTicket = createTicket(
-        title,
-        description,
-        priority as "critical" | "high" | "medium" | "low"
-    );
+    const newTicket: Ticket = createTicket(
+    title,
+    description,
+    priority as "critical" | "high" | "medium" | "low"
+);
 
     return response.status(HTTP_STATUS.CREATED).json({
         message: "Ticket created",
@@ -142,7 +144,8 @@ export function updateTicketController(
         });
     }
 
-    const updates = requestBody as Record<string, unknown>;
+    const updates: Record<string, unknown> =
+        requestBody as Record<string, unknown>;
 
     if (updates.priority !== undefined) {
         if (
@@ -185,17 +188,17 @@ export function updateTicketController(
         });
     }
 
-    const updatedTicket = updateTicket(
+    const updatedTicket: Ticket | undefined = updateTicket(
         ticketId,
-        {
-            title: updates.title as string | undefined,
-            description: updates.description as string | undefined,
-            priority: updates.priority as
-                "critical" | "high" | "medium" | "low" | undefined,
-            status: updates.status as
-                "open" | "in-progress" | "resolved" | undefined,
-        }
-    );
+    {
+        title: updates.title as string | undefined,
+        description: updates.description as string | undefined,
+        priority: updates.priority as
+            "critical" | "high" | "medium" | "low" | undefined,
+        status: updates.status as
+            "open" | "in-progress" | "resolved" | undefined,
+    }
+);
 
     if (updatedTicket === undefined) {
         return response.status(HTTP_STATUS.NOT_FOUND).json({
