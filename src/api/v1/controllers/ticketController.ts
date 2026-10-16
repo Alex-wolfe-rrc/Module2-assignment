@@ -4,6 +4,7 @@ import { HTTP_STATUS } from "../../../constants/httpConstants";
 import {
     getAllTickets,
     getTicketById,
+    getTicketUrgencyById
 } from "../services/ticketService";
 
 /**
@@ -41,5 +42,28 @@ export function getTicketByIdController(
     return response.status(HTTP_STATUS.OK).json({
         message: "Ticket retrieved",
         data: ticket,
+    });
+}
+
+
+/**
+ * Handles requests to calculate urgency for one support ticket.
+ */
+export function getTicketUrgencyController(
+    request: Request,
+    response: Response
+): Response {
+    const ticketId: number = Number(request.params.id);
+    const urgencyData = getTicketUrgencyById(ticketId);
+
+    if (urgencyData === undefined) {
+        return response.status(HTTP_STATUS.NOT_FOUND).json({
+            message: "Ticket not found",
+        });
+    }
+
+    return response.status(HTTP_STATUS.OK).json({
+        message: "Ticket urgency calculated",
+        data: urgencyData,
     });
 }
