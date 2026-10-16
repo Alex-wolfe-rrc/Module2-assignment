@@ -72,3 +72,32 @@ export function getTicketUrgencyById(
         urgencyLevel: urgencyLevel,
     };
 }
+
+
+/**
+ * Adds a new support ticket to the in-memory ticket list.
+ */
+export function createTicket(
+    title: string,
+    description: string,
+    priority: Ticket["priority"]
+): Ticket {
+    const nextId: number = tickets.reduce(
+        (highestId: number, ticket: Ticket) =>
+            Math.max(highestId, ticket.id),
+        0
+    ) + 1;
+
+    const newTicket: Ticket = {
+        id: nextId,
+        title: title,
+        description: description,
+        priority: priority,
+        status: "open",
+        createdAt: new Date().toISOString(),
+    };
+
+    tickets.push(newTicket);
+
+    return newTicket;
+}
