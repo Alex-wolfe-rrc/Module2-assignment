@@ -133,3 +133,19 @@ export function updateTicket(
 
     return ticket;
 }
+
+/**
+ * Deletes a support ticket from the ticket list.
+ */
+export function deleteTicket(ticketId: number): boolean {
+    const ticketIndex: number = tickets.findIndex(
+        (ticket: Ticket) => ticket.id === ticketId
+    );
+
+    if (ticketIndex === -1) {
+        return false;
+    }
+
+    tickets.splice(ticketIndex, 1);
+    return true;
+}
