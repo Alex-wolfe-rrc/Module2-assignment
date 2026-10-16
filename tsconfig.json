@@ -14,7 +14,12 @@
         "noImplicitThis": true,
         "noUnusedLocals": true,
         "alwaysStrict": true,
-        "types": ["jest"]
+        "baseUrl": "./",
+        "ignoreDeprecations": "6.0",
+        "types": ["jest"],
+        "paths": {
+            "*": ["*"]
+        }
     },
     "include": ["src/**/*", "test/**/*", "config/**/*"],
     "exclude": ["node_modules", "dist"]
