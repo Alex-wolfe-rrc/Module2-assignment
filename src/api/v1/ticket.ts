@@ -20,3 +20,15 @@ export interface Ticket {
     status: TicketStatus;
     createdAt: string;
 }
+
+export interface TicketUrgencyResult {
+    id: number;
+    title: string;
+    description: string;
+    priority: TicketPriority;
+    status: TicketStatus;
+    createdAt: string;
+    ticketAge: number;
+    urgencyScore: number;
+    urgencyLevel: string;
+}
