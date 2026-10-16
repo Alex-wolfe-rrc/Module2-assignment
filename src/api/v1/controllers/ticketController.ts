@@ -123,10 +123,6 @@ export function createTicketController(
 
 /**
  * Handles requests to update an existing support ticket.
- *
- * @param request - The incoming request containing the ID and updated fields.
- * @param response - The outgoing HTTP response.
- * @returns The updated ticket or an appropriate error response.
  */
 export function updateTicketController(
     request: Request,

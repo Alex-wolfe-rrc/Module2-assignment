@@ -5,6 +5,7 @@ import {
     getTicketByIdController,
     getTicketUrgencyController,
     createTicketController,
+    updateTicketController,
 } from "../controllers/ticketController";
 
 const ticketRoutes: Router = Router();
@@ -16,5 +17,6 @@ ticketRoutes.get("/tickets", getAllTicketsController);
 ticketRoutes.get("/tickets/:id", getTicketByIdController);
 ticketRoutes.get("/tickets/:id/urgency", getTicketUrgencyController);
 ticketRoutes.post("/tickets", createTicketController);
+ticketRoutes.put("/tickets/:id", updateTicketController);
 
 export default ticketRoutes;
